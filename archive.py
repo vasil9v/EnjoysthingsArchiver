@@ -104,6 +104,16 @@ def parseItem(c):
       item['type'] = 'text'
 
   #print(item['id'], item['type'])
+  #json test
+  try:
+    s = json.dumps(item)
+    item2 = json.loads(s)
+  except:
+    print("can't serialize: " + str(item))
+    item['title'] = ""
+    item['pageurl'] = ""
+    item['imageurl'] = ""    
+    item['error'] = "error parsing item: http://enjoysthin.gs/" + item['id']    
   return item
 
 def getUserIdByUsername(username):
@@ -117,6 +127,8 @@ def archiveUser(username):
 
   userid = getUserIdByUsername(username)
 
+  chunkserver = 30
+  chunkfile = 1000
   outfile = username + ".all.items.%d.json"
   offset = 0
   idcache = {}
@@ -127,9 +139,9 @@ def archiveUser(username):
     c = getPage('http://'+username+'.enjoysthin.gs/api/get.things.html', None, 'type=user-'+userid+':'+str(offset))
     items = parseChunk(c)
     itemlist = itemlist + items
-    if len(items) < 30:
+    if len(items) < chunkserver:
       done = True
-    offset += 30
+    offset += chunkserver
     # debug: if offset > 70: done = True
     for i in items:
       if i['id'] in idcache:
@@ -138,10 +150,10 @@ def archiveUser(username):
   print("Downloaded %d items" % (len(itemlist)))
   filecount = 0
   while len(itemlist) > 0:
-    items1k = itemlist[0:1000]
+    items1k = itemlist[0:chunkfile]
     fname = outfile % (filecount)
     save(fname, json.dumps(items1k))
-    itemlist = itemlist[1000:]
+    itemlist = itemlist[chunkfile:]
     print("Saved to %s items" % (fname))
     filecount += 1
 
