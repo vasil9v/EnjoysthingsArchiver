@@ -14,7 +14,7 @@ You need to have python installed on your machine.
 
 Open up a terminal and run
 ```
-    python archive.py &lt;username&gt;
+    python archive.py <username>
 ```
 where &lt;username&gt; is replaced with your username from enjoysthings. For example:
 ```
