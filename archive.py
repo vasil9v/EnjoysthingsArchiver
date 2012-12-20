@@ -5,6 +5,7 @@ import sys
 S1 = '<div class="content-container'
 S2 = 'background-image: url('
 S3 = 'id="content-container-'
+S4 = '?play=1'
 
 def getPage(url, theheaders, thedata):
   if not theheaders: theheaders = {}
@@ -73,6 +74,10 @@ def parseItem(c):
     item['imageurl'] = imageurl[len(S2):]
   else:
     item['type'] = 'page'  
+
+  # identify video types
+  if c.find(S4) != -1:
+    item['type'] = 'video'
 
   theid = sliceit(c, S3, '" ')
   if theid:
