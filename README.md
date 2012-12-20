@@ -20,7 +20,7 @@ where &lt;username&gt; is replaced with your username from enjoysthings. For exa
 ```
     python archive.py vasil9v
 ```
-The archive will be saved in a file in the same folder named "all.items.json".
+The archive will be saved in a set of files in the same folder named "<username>.all.items.N.json" with N starting at 0 and increasing by 1 for each 1000-item file needed until all the items are saved.
 
 ## Disclaimer
 

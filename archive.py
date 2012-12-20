@@ -112,7 +112,7 @@ def archiveUser(username):
 
   userid = getUserIdByUsername(username)
 
-  outfile = username + ".all.items.json"
+  outfile = username + ".all.items.%d.json"
   offset = 0
   idcache = {}
   itemlist = []
@@ -131,8 +131,14 @@ def archiveUser(username):
         print("already in: " + str(i['id']))
       idcache[i['id']] = i['id']
   print("Downloaded %d items" % (len(itemlist)))
-  save(outfile, json.dumps(itemlist))
-  print("Saved to %s items" % (outfile))
+  filecount = 0
+  while len(itemlist) > 0:
+    items1k = itemlist[0:1000]
+    fname = outfile % (filecount)
+    save(fname, json.dumps(items1k))
+    itemlist = itemlist[1000:]
+    print("Saved to %s items" % (fname))
+    filecount += 1
 
 if len(sys.argv) > 1:
   archiveUser(sys.argv[1])
