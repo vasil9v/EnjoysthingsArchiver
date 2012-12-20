@@ -83,11 +83,12 @@ def parseItem(c):
   link = sliceit(s, 'href="', '</a>')
   title = sliceit(link, '">', '</a>')
   link = sliceit(link, 'url=', '">')
-  link = link[4:]
-  link = urllib2.unquote(link)
+  if link:
+    link = link[4:]
+    link = urllib2.unquote(link)
+    item['pageurl'] = link
   title = title[2:]
   item['title'] = title
-  item['pageurl'] = link
 
   # highlighted text
   s = sliceit(c, 'class="highlight"', '</span>')
@@ -111,7 +112,7 @@ def archiveUser(username):
 
   userid = getUserIdByUsername(username)
 
-  outfile = "all.items.json"
+  outfile = username + ".all.items.json"
   offset = 0
   idcache = {}
   itemlist = []
