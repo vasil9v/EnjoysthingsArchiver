@@ -22,6 +22,10 @@ where &lt;username&gt; is replaced with your username from enjoysthings. For exa
 ```
 The archive will be saved in a file in the same folder named "all.items.json".
 
+## Disclaimer
+
+I counld't figure out how to get JSON from the server so this script has to parse HTML. Please don't ridicule me.
+
 ## TODO
 
 I guess i should provide a way to dump the items as a more readable format like CSV. Maybe even a way to download the image files from their sites.
